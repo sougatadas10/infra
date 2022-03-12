@@ -2,7 +2,7 @@
 import com.foo.readYML
 
 def fRead=new readYML()
-def jobs=[],keys=[]
+def jobs=[]
 
 node() {
     stage('clone') {
@@ -12,15 +12,9 @@ node() {
         def config=readYaml file: "./envState.yml"
         jobs=fRead.parse(this,config)
         
-        keys=jobs.get(jobs.size()-1)
-        
-        for (int i=0; i <keys.size(); ++i){
-            println keys.get(i)
-            println jobs.get(i)
-        }
-        
-       
-        
+        jobs.each {
+            key,value -> println ("key: "+key+ " "+ "value: "+ value)    
+        }        
         
     }
     
