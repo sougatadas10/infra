@@ -1,5 +1,5 @@
 mysql:
-  "deploy": true  #true,false
+  "deploy": "true"  #true,false
   "flavor": "standalone" #standalone, cluster
   "notifiers": "sougatadas10@gmail.com"
   "inventory": "inventory/inventory"
