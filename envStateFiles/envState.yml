@@ -2,8 +2,8 @@ mysql:
   "deploy": true  #true,false
   "flavor": "standalone" #standalone, cluster
   "notifiers": "sougatadas10@gmail.com"
-  "inventory": "inventry/pt/test.yml"
-  "playbook": "infra/ansible/playbook_mysql.yml"
+  "inventory": "inventory/inventory"
+  "playbook": "ansible/playbook_test.yml"
   "extra_vars":
     "jenkins_workspace": "${WORKSPACE}"
     "commit_id": "${COMMIT_ID}"
