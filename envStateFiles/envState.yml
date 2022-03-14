@@ -2,12 +2,12 @@ mysql:
   "deploy": "true"  #true,false
   "flavor": "standalone" #standalone, cluster
   "notifiers": "sougatadas10@gmail.com"
-  "inventory": "inventory/inventory"
-  "playbook": "ansible/playbook_test.yml"
+  "inventory": "$WORKSPACE/ansible/inventory/inventory"
+  "playbook": "$WORKSPACE/ansible/playbook_test.yml"
   "extra_vars":
     "jenkins_workspace": "${WORKSPACE}"
-    "commit_id": "${COMMIT_ID}"
-    "release_version": "${RELEASE_VERSION}"
+    "commit_id": "123"
+    "release_version": "456"
     "mysql_bless_password": "123$"
     "mysql_tessera_password": "123$"
     "mysql_discovery_password": "123$"
