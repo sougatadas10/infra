@@ -7,9 +7,9 @@ def ansibleParams=[]
 String flagDeployAnsible
 
 node() {
-    //stage('clone') {
-    //    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/environmentStateFiles.git'
-    //}
+    stage('clone') {
+        git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+    }
     stage('read') {
         def config=readYaml file: "./envStateFiles/envState.yml"
         jobs=fRead.parse(this,config)
