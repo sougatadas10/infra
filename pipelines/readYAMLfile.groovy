@@ -5,11 +5,11 @@ def fRead=new readYML()
 def jobs=[]
 
 node() {
-    stage('clone') {
-        git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/environmentStateFiles.git'
-    }
+    //stage('clone') {
+    //    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/environmentStateFiles.git'
+    //}
     stage('read') {
-        def config=readYaml file: "./envState.yml"
+        def config=readYaml file: "./envStateFiles/envState.yml"
         jobs=fRead.parse(this,config)
         
         jobs.each {

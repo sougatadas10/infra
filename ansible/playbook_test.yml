@@ -4,3 +4,4 @@
 - tasks:
   - name: Create a directory if it does not exist
     command: hostname
+  - debug: msg={{mysql_bless_password}}
