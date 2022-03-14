@@ -7,6 +7,7 @@ node() {
 			string(name: 'inventory',defaultValue: '',description: 'inventory file name to be used by ansible' ),
 			string(name: 'playbook',defaultValue: '',description: 'name of ansible playbook' ),
 			string(name: 'extra_vars',defaultValue: '',description: 'list of extra variables. To be passed as json' )
+			])
 		])
 	stage('run ansible') {
 		String extraVars="'" + params.extra_vars +"'"
