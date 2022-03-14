@@ -9,6 +9,9 @@ node() {
 			string(name: 'extra_vars',defaultValue: '',description: 'list of extra variables. To be passed as json' )
 			])
 		])
+	stage('clone') {
+		git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+	}
 	stage('run ansible') {
 		String extraVars="'" + params.extra_vars +"'"
 		sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook"
