@@ -10,7 +10,8 @@ node() {
 		])
 	stage('run ansible') {
 		String extraVars="'" + params.extra_vars +"'"
-		ansiblePlaybook extras: extraVars, inventory: params.inventory, playbook: params.playbook
+		sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook"
+		//ansiblePlaybook extras: extraVars, inventory: params.inventory, playbook: params.playbook
 	}
 
 }
