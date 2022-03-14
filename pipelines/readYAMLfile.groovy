@@ -3,6 +3,8 @@ import com.foo.readYML
 
 def fRead=new readYML()
 def jobs=[]
+def ansibleParams=[]
+String flagDeployAnsible
 
 node() {
     //stage('clone') {
@@ -13,9 +15,26 @@ node() {
         jobs=fRead.parse(this,config)
         
         jobs.each {
-            key,value -> println ("key: "+key+ " "+ "value: "+ value)    
+            key,value -> println ("key: "+key+ " "+ "value: "+ value) 
+			if (key == "mysql") {
+				if (value == "false") {
+					flagDeployAnsible=false
+					println ("skipping mysql configuration")
+				}
+				else {
+					flagDeployAnsible=true
+					ansibleParams=value
+				}
+			}
         }        
         
     }
+	stage('trigger ansible') {
+		
+		if (flagDeployAnsible) {
+			build job: 'runAnsible', propagate: true, parameters: ansibleParams
+		}
+		
+	}
     
 }
