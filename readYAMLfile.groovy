@@ -1,4 +1,4 @@
-@Library('mylib')_
+@Library('sharedLibrary')_
 import com.foo.readYML
 
 def fRead=new readYML()
