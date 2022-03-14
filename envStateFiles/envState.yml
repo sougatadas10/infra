@@ -1,0 +1,17 @@
+mysql:
+  "deploy": true  #true,false
+  "flavor": "standalone" #standalone, cluster
+  "notifiers": "sougatadas10@gmail.com"
+  "inventory": "inventry/pt/test.yml"
+  "playbook": "infra/ansible/playbook_mysql.yml"
+  "extra_vars":
+    "jenkins_workspace": "${WORKSPACE}"
+    "commit_id": "${COMMIT_ID}"
+    "release_version": "${RELEASE_VERSION}"
+    "mysql_bless_password": "123$"
+    "mysql_tessera_password": "123$"
+    "mysql_discovery_password": "123$"
+    "mysql_admin_password": "123$"
+    "mysql_root_password": "456"
+    "mysql_app_password": "789$"
+  
