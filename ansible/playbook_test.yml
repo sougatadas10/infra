@@ -1,7 +1,7 @@
 ---
 - hosts: all
-
-- tasks:
+  
+  tasks:
   - debug: msg={{mysql_bless_password}}
   
   - name: display hostname
