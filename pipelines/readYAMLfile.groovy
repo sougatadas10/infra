@@ -37,8 +37,7 @@ node() {
 					vaultParams=value
 				}
 				break;
-				case default:
-				error('Invalid key')
+
 			}
 
         }        
