@@ -20,7 +20,6 @@ node() {
 			if (key == "mysql") {
 				if (value == "false") {
 					flagMysql=false
-					println ("skipping mysql configuration")
 				}
 				else {
 					flagMysql=true
@@ -30,7 +29,6 @@ node() {
 		else if (key == "vault") {
 			if (value == "false") {
 				flagVault=false
-				println ("skipping vault configuration")
 			}
 			else {
 				flagVault=true
@@ -48,13 +46,18 @@ node() {
 		if (flagMysql) {
 			build job: 'runAnsible', propagate: false, parameters: mysqlParams
 		}
+		else {
+			println ("skipping mysql configuration")
+		}
 		
 	}
 	stage('vault ansible configuration') {
 	if (flagVault) {
 		build job: 'runAnsible', propagate: false, parameters: vaultParams
 		}
-	
+	else {
+		println ("skipping vault configuration")
+		}
 	}
 
     
