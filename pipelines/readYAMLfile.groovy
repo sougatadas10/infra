@@ -6,33 +6,7 @@ def jobs=[]
 def mysqlParams=[],vaultParams=[]
 boolean flagMysql,flagVault
 
-def prepJobParams(def key, def value) {
-	if (key == "mysql") {
-		if (value == "false") {
-			flagMysql=false
-			println ("skipping mysql configuration")
-		}
-		else {
-			flagMysql=true
-			mysqlParams=value
-		}
-	}
-	else if (key == "vault") {
-		if (value == "false") {
-			flagVault=false
-			println ("skipping vault configuration")
-		}
-		else {
-			flagVault=true
-			vaultParams=value
-		}
-	}
-	else {
-		error('invalid option')
-	}
-	
-	
-}
+
 node() {
     stage('clone') {
         git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
@@ -43,7 +17,30 @@ node() {
         
         jobs.each {
             key,value -> println ("key: "+key+ " "+ "value: "+ value) 
-			prepJobParams(key,value)
+			if (key == "mysql") {
+				if (value == "false") {
+					flagMysql=false
+					println ("skipping mysql configuration")
+				}
+				else {
+					flagMysql=true
+					mysqlParams=value
+				}
+			}
+		else if (key == "vault") {
+			if (value == "false") {
+				flagVault=false
+				println ("skipping vault configuration")
+			}
+			else {
+				flagVault=true
+				vaultParams=value
+			}
+		}
+		else {
+			error('invalid option')
+		}
+
         }        
         
     }
