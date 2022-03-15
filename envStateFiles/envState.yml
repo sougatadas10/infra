@@ -15,7 +15,7 @@ mysql:
     "mysql_root_password": "456"
     "mysql_app_password": "789$"
 vault:
-  "deploy": "true"  #true,false
+  "deploy": "false"  #true,false
   "flavor": "standalone" #standalone, cluster
   "notifiers": "sougatadas10@gmail.com"
   "inventory": "$WORKSPACE/ansible/inventory/inventory"
