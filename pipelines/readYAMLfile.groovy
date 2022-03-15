@@ -46,13 +46,13 @@ node() {
     }
 	stage('mysql ansible configuration') {
 		if (flagMysql) {
-			build job: 'runAnsible', propagate: true, parameters: mysqlParams
+			build job: 'runAnsible', propagate: false, parameters: mysqlParams
 		}
 		
 	}
 	stage('vault ansible configuration') {
 	if (flagVault) {
-		build job: 'runAnsible', propagate: true, parameters: vaultParams
+		build job: 'runAnsible', propagate: false, parameters: vaultParams
 		}
 	
 	}
