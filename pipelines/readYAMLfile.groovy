@@ -47,7 +47,7 @@ node() {
 		}
 		
 	}
-	stage('vault ansible configuration')
+	stage('vault ansible configuration') {
 	if (flagVault) {
 		build job: 'runAnsible', propagate: true, parameters: vaultParams
 	}
