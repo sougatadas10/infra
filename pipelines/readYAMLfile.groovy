@@ -2,8 +2,8 @@
 import com.foo.readYML
 
 def fRead=new readYML()
-def jobs=[]
-def mysqlParams=[],vaultParams=[]
+def jobs=[],mysqlParams=[],vaultParams=[]
+def jobMysql,jobVault
 boolean flagMysql,flagVault
 
 
@@ -44,7 +44,7 @@ node() {
     }
 	stage('mysql ansible configuration') {
 		if (flagMysql) {
-			build job: 'runAnsible', propagate: false, parameters: mysqlParams
+			jobMysql=build job: 'runAnsible', propagate: false, parameters: mysqlParams
 		}
 		else {
 			println ("skipping mysql configuration")
@@ -52,12 +52,30 @@ node() {
 		
 	}
 	stage('vault ansible configuration') {
-	if (flagVault) {
-		build job: 'runAnsible', propagate: false, parameters: vaultParams
+		if (flagVault) {
+			jobVault=build job: 'runAnsible', propagate: false, parameters: vaultParams
 		}
-	else {
-		println ("skipping vault configuration")
+		else {
+			println ("skipping vault configuration")
 		}
+	}
+	stage('set result'){
+		if (flagMysql)
+			if (jobMysql.getResult()=='SUCCESS')
+				println('Ansible configuration for mysql is successful')
+			else {
+				println('Ansible configuration for mysql has failed')
+				currentbuild.result='FAILURE'
+			}	
+		
+		if (flagVault)
+			if (jobVault.getResult()=='SUCCESS')
+				println('Ansible configuration for vault is successful')
+			else {
+				println('Ansible configuration for vault has failed')
+				currentbuild.result='FAILURE'
+			}	
+		
 	}
 
     
