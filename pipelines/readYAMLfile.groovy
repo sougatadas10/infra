@@ -3,8 +3,8 @@ import com.foo.readYML
 
 def fRead=new readYML()
 def jobs=[]
-def ansibleParams=[]
-String flagDeployAnsible
+def mysqlParams=[],vaultParams=[]
+boolean flagMysql,flagVault
 
 node() {
     stage('clone') {
@@ -16,25 +16,43 @@ node() {
         
         jobs.each {
             key,value -> println ("key: "+key+ " "+ "value: "+ value) 
-			if (key == "mysql") {
+			switch(key) {
+				case mysql:
 				if (value == "false") {
-					flagDeployAnsible=false
+					flagMysql=false
 					println ("skipping mysql configuration")
 				}
 				else {
-					flagDeployAnsible=true
-					ansibleParams=value
+					flagMysql=true
+					mysqlParams=value
+				}
+				break;
+				case vault:
+				if (value == "false") {
+					flagVault=false
+					println ("skipping vault configuration")
+				}
+				else {
+					flagVault=true
+					vaultParams=value
 				}
 			}
+
         }        
         
     }
-	stage('trigger ansible') {
-		
-		if (flagDeployAnsible) {
-			build job: 'runAnsible', propagate: true, parameters: ansibleParams
+	stage('mysql ansible configuration') 
+		if (flagMysql) {
+			build job: 'runAnsible', propagate: true, parameters: mysqlParams
 		}
 		
 	}
+	stage('vault ansible configuration')
+	if (flagVault) {
+		build job: 'runAnsible', propagate: true, parameters: vaultParams
+	}
+	
+}
+
     
 }

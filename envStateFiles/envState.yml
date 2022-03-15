@@ -14,4 +14,22 @@ mysql:
     "mysql_admin_password": "123$"
     "mysql_root_password": "456"
     "mysql_app_password": "789$"
+vault:
+  "deploy": "true"  #true,false
+  "flavor": "standalone" #standalone, cluster
+  "notifiers": "sougatadas10@gmail.com"
+  "inventory": "$WORKSPACE/ansible/inventory/inventory"
+  "playbook": "$WORKSPACE/ansible/playbook_test.yml"
+  "extra_vars":
+    "jenkins_workspace": "${WORKSPACE}"
+    "commit_id": "123"
+    "release_version": "456"
+    "mysql_bless_password": "123$"
+    "mysql_tessera_password": "123$"
+    "mysql_discovery_password": "123$"
+    "mysql_admin_password": "123$"
+    "mysql_root_password": "456"
+    "mysql_app_password": "789$"
+
+    
   
