@@ -36,12 +36,15 @@ node() {
 					flagVault=true
 					vaultParams=value
 				}
+				break;
+				case default:
+				error('Invalid key')
 			}
 
         }        
         
     }
-	stage('mysql ansible configuration') 
+	stage('mysql ansible configuration') {
 		if (flagMysql) {
 			build job: 'runAnsible', propagate: true, parameters: mysqlParams
 		}
@@ -50,9 +53,9 @@ node() {
 	stage('vault ansible configuration') {
 	if (flagVault) {
 		build job: 'runAnsible', propagate: true, parameters: vaultParams
-	}
+		}
 	
-}
+	}
 
     
 }
