@@ -6,6 +6,10 @@ import groovy.sql.Sql;
 
 
 node() {
+	
+ stage('clone') {
+     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+  }	
   stage ('connection') {
     def classLoader = ClassLoader.systemClassLoader
     while (classLoader.parent) {
