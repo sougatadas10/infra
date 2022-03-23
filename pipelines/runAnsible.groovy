@@ -6,11 +6,13 @@ node() {
 			string(name: 'notifiers',defaultValue: '',description: 'list of email ids to be notified in case of failure' ),
 			string(name: 'inventory',defaultValue: '',description: 'inventory file name to be used by ansible' ),
 			string(name: 'playbook',defaultValue: '',description: 'name of ansible playbook' ),
-			string(name: 'extra_vars',defaultValue: '',description: 'list of extra variables. To be passed as json' )
+			string(name: 'extra_vars',defaultValue: '',description: 'list of extra variables. To be passed as json' ),
+			string(name: 'commit_id',defaultValue: '',description: 'commit id' )
 			])
 		])
 	stage('clone') {
-		git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+		//git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+		gitCheckout(branch: params.commit_id,url: "https://github.com/sougatadas10/infra.git")
 	}
 	stage('run ansible') {
 		String extraVars="'" + params.extra_vars +"'"

@@ -52,6 +52,7 @@ node() {
 	}
 	stage('mysql ansible configuration') {
 		if (flagMysql) {
+			mysqlParams = mysqlParams.add([$class: 'StringParameterValue', "name": "commit_id","value": params.commit_id)
 			jobMysql=build job: 'runAnsible', propagate: false, parameters: mysqlParams
 		}
 		else {
@@ -61,6 +62,7 @@ node() {
 	}
 	stage('vault ansible configuration') {
 		if (flagVault) {
+			jobVault = jobVault.add([$class: 'StringParameterValue', "name": "commit_id","value": params.commit_id)
 			jobVault=build job: 'runAnsible', propagate: false, parameters: vaultParams
 		}
 		else {
