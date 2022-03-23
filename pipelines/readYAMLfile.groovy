@@ -24,7 +24,7 @@ node() {
 		jobs=fRead.parse(this,config)
 
 		jobs.each {
-			key,value -> println ("key: "+key+ " "+ "value: "+ value)
+			key,value -> 
 			if (key == "mysql") {
 				if (value == "false") {
 					flagMysql=false
