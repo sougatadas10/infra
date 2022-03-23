@@ -8,18 +8,18 @@ boolean flagMysql,flagVault
 
 
 node() {
-	parameters([
-			string(name: 'file_name',defaultValue: '',description: 'name of file' ),
-			gitParameter(branch: '',
-				defaultValue: 'master',
-				description: 'commit id to check out',
-				name: 'BRANCH')
-				
+	properties([
+		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
+		parameters([
+			string(name: 'file_name',defaultValue: '',description: 'environment file' ),
+			string(name: 'commit_id',defaultValue: '',description: 'commit id' )
+			])
 		])
 	
-	
 	stage('clone') {
-		git branch: params.BRANCH, changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+		checkout([$class: 'GitSCM', 
+			branches: [[name: "${params.commit_id}"]], extensions: [], 
+			userRemoteConfigs: [[url: 'https://github.com/sougatadas10/infra.git']]])
 	}
 	stage('read') {
 		def config=readYaml file: params.file_name
