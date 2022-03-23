@@ -8,15 +8,22 @@ boolean flagMysql,flagVault
 
 
 node() {
-    stage('clone') {
-        git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
-    }
-    stage('read') {
-        def config=readYaml file: "./envStateFiles/envState.yml"
-        jobs=fRead.parse(this,config)
-        
-        jobs.each {
-            key,value -> println ("key: "+key+ " "+ "value: "+ value) 
+	properties([
+		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
+		parameters([
+			string(name: 'commit_id',defaultValue: '',description: 'bitbucket commit id' ),
+			string(name: 'file_name',defaultValue: '',description: 'environment configuratin file' )
+		])
+	])
+	stage('clone') {
+		git branch: params.commit_id, changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+	}
+	stage('read') {
+		def config=readYaml file: params.file_name
+		jobs=fRead.parse(this,config)
+
+		jobs.each {
+			key,value -> println ("key: "+key+ " "+ "value: "+ value)
 			if (key == "mysql") {
 				if (value == "false") {
 					flagMysql=false
@@ -26,22 +33,22 @@ node() {
 					mysqlParams=value
 				}
 			}
-		else if (key == "vault") {
-			if (value == "false") {
-				flagVault=false
+			else if (key == "vault") {
+				if (value == "false") {
+					flagVault=false
+				}
+				else {
+					flagVault=true
+					vaultParams=value
+				}
 			}
 			else {
-				flagVault=true
-				vaultParams=value
+				error('invalid option')
 			}
-		}
-		else {
-			error('invalid option')
+
 		}
 
-        }        
-        
-    }
+	}
 	stage('mysql ansible configuration') {
 		if (flagMysql) {
 			jobMysql=build job: 'runAnsible', propagate: false, parameters: mysqlParams
@@ -49,7 +56,7 @@ node() {
 		else {
 			println ("skipping mysql configuration")
 		}
-		
+
 	}
 	stage('vault ansible configuration') {
 		if (flagVault) {
@@ -66,17 +73,17 @@ node() {
 			else {
 				println('Ansible configuration for mysql has failed')
 				currentbuild.result='FAILURE'
-			}	
-		
+			}
+
 		if (flagVault)
 			if (jobVault.getResult()=='SUCCESS')
 				println('Ansible configuration for vault is successful')
 			else {
 				println('Ansible configuration for vault has failed')
 				currentbuild.result='FAILURE'
-			}	
-		
+			}
+
 	}
 
-    
+
 }
