@@ -12,11 +12,18 @@ node() {
 		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
 		parameters([
 			string(name: 'commit_id',defaultValue: '',description: 'bitbucket commit id' ),
-			string(name: 'file_name',defaultValue: '',description: 'environment configuratin file' )
+			gitParameter(branch: '',
+				defaultValue: 'master',
+				description: 'commit id to check out',
+				name: 'BRANCH',
+				quickFilterEnabled: false,
+				selectedValue: 'NONE',
+				sortMode: 'NONE',
+				tagFilter: '*')
 		])
 	])
 	stage('clone') {
-		git branch: params.commit_id, changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
+		git branch: params.BRANCH, changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
 	}
 	stage('read') {
 		def config=readYaml file: params.file_name
