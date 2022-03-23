@@ -20,7 +20,7 @@ node() {
 		gitCheckout(branch: params.commit_id,url: "https://github.com/sougatadas10/infra.git")
 	}
 	stage('read') {
-		def config=readYaml file: params.file_name
+		def config=readYaml file: "${workspace}/envStateFiles/${params.file_name}
 		jobs=fRead.parse(this,config)
 
 		jobs.each {
