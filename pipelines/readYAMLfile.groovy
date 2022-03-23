@@ -17,9 +17,6 @@ node() {
 		])
 	
 	stage('clone') {
-		/**checkout([$class: 'GitSCM', 
-			branches: [[name: "${params.commit_id}"]], extensions: [], 
-			userRemoteConfigs: [[url: 'https://github.com/sougatadas10/infra.git']]])**/
 		gitCheckout(branch: params.commit_id,url: "https://github.com/sougatadas10/infra.git")
 	}
 	stage('read') {
@@ -87,6 +84,9 @@ node() {
 				currentbuild.result='FAILURE'
 			}
 
+	}
+	stage('cleanup') {
+		deleteDir()
 	}
 
 

@@ -17,5 +17,8 @@ node() {
 		sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook --connection=local"
 		//ansiblePlaybook extras: extraVars, inventory: params.inventory, playbook: params.playbook
 	}
+	stage('cleanup') {
+		deleteDir()
+	}
 
 }
