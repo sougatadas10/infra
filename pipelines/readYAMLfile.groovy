@@ -9,17 +9,14 @@ boolean flagMysql,flagVault
 
 node() {
 	properties([
-		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
+		
 		parameters([
-			string(name: 'commit_id',defaultValue: '',description: 'bitbucket commit id' ),
+			string(name: 'file_name',defaultValue: '',description: 'name of file' ),
 			gitParameter(branch: '',
 				defaultValue: 'master',
 				description: 'commit id to check out',
-				name: 'BRANCH',
-				quickFilterEnabled: false,
-				selectedValue: 'NONE',
-				sortMode: 'NONE',
-				tagFilter: '*')
+				name: 'BRANCH')
+				
 		])
 	])
 	stage('clone') {
