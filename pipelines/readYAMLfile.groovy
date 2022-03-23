@@ -8,9 +8,7 @@ boolean flagMysql,flagVault
 
 
 node() {
-	properties([
-		
-		parameters([
+	parameters([
 			string(name: 'file_name',defaultValue: '',description: 'name of file' ),
 			gitParameter(branch: '',
 				defaultValue: 'master',
@@ -18,7 +16,8 @@ node() {
 				name: 'BRANCH')
 				
 		])
-	])
+	
+	
 	stage('clone') {
 		git branch: params.BRANCH, changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
 	}
