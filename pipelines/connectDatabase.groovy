@@ -1,8 +1,8 @@
-//@Library('sharedLibrary')_
-//import com.foo.DBConnection;
-import groovy.sql.Sql;
+@Library('sharedLibrary')_
+import com.foo.DBConnection;
+//import groovy.sql.Sql;
 
-//def db=new DBConnection()
+def db=new DBConnection()
 
 
 node() {
