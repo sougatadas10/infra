@@ -1,7 +1,7 @@
 @Library('sharedLibrary')_
-import com.foo.readYML
+import com.foo.parseYML
 
-def fRead=new readYML()
+def fRead=new parseYML()
 def jobs=[],mysqlParams=[],vaultParams=[]
 def jobMysql,jobVault
 boolean flagMysql,flagVault
