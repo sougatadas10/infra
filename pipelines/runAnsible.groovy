@@ -9,15 +9,20 @@ node() {
 			string(name: 'playbook',defaultValue: '',description: 'name of ansible playbook' ),
 			string(name: 'extra_vars',defaultValue: '',description: 'list of extra variables. To be passed as json' ),
 			string(name: 'commit_id',defaultValue: '',description: 'commit id' )
-			])
 		])
+	])
 	stage('clone') {
 		//git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sougatadas10/pipelines.git'
 		gitCheckout(branch: params.commit_id,url: "https://github.com/sougatadas10/infra.git")
 	}
 	stage('run ansible') {
-		String extraVars="'" + params.extra_vars +"'"
-		sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook --connection=local"
+
+		//sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook --connection=local"
+		ansiColor('xterm') {
+			String extraVars="'" + params.extra_vars +"'"
+			String cmd="ansible-playbook -i ${params.inventory} --extra-vars ${extraVars} ${params.playbook} --connection=local"
+			sh('#!/bin/bash -e\n' + "$cmd")
+		}
 		//ansiblePlaybook extras: extraVars, inventory: params.inventory, playbook: params.playbook
 	}
 	stage('cleanup') {
