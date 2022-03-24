@@ -18,7 +18,7 @@ node() {
     classLoader.addURL(new File("$WORKSPACE/resources/mysql-connector-java-8.0.28.jar").toURL())
     def sql = Sql.newInstance("jdbc:mysql://host.docker.internal:3306/employee", "root", "root@pass", "com.mysql.jdbc.Driver")
     sql.firstRow('SELECT employee_id, employee_name FROM employee_master')
-    sql.close()**
+    sql.close()**/
     db.getConnection(this)
   }
         
