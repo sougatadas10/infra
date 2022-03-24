@@ -20,8 +20,9 @@ node() {
 		//sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook --connection=local"
 		ansiColor('xterm') {
 			String extraVars="'" + params.extra_vars +"'"
-			String cmd="ansible-playbook -i ${params.inventory} --extra-vars ${extraVars} ${params.playbook} --connection=local"
-			sh('#!/bin/bash -e\n' + "$cmd")
+			String cmd="#!/bin/bash -e\n set +x\n" + "ansible-playbook -i ${params.inventory} --extra-vars ${extraVars} ${params.playbook} --connection=local"
+			writeFile encoding: 'UTF-8', file: './runAnsible.sh', text: "$cmd"
+			sh 'chmod +x ./runAnsible.sh && ./runAnsible.sh'
 		}
 		//ansiblePlaybook extras: extraVars, inventory: params.inventory, playbook: params.playbook
 	}
