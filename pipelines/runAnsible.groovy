@@ -1,4 +1,8 @@
 @Library('sharedLibrary')_
+import com.foo.setHeader
+
+def header=new setHeader()
+
 node() {
 	properties([
 		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
@@ -20,7 +24,8 @@ node() {
 		//sh "ansible-playbook -i $params.inventory --extra-vars $extraVars $params.playbook --connection=local"
 		ansiColor('xterm') {
 			String extraVars="'" + params.extra_vars +"'"
-			String cmd="#!/bin/bash -e\n set +x\n" + "ansible-playbook -i ${params.inventory} --extra-vars ${extraVars} ${params.playbook} --connection=local"
+			String ansibleCmd="ansible-playbook -i ${params.inventory} --extra-vars ${extraVars} ${params.playbook} --connection=local"
+			String cmd=header.setShellHeader(ansibleCmd)
 			writeFile encoding: 'UTF-8', file: './runAnsible.sh', text: "$cmd"
 			sh 'chmod +x ./runAnsible.sh && ./runAnsible.sh'
 		}
