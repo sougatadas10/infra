@@ -8,7 +8,7 @@ boolean flagMysql,flagVault
 
 
 node() {
-  def ansible_job = 'runAnsible-multibranch' + env.branch_name.replace("/","%2F")
+  def ansible_job = 'runAnsible-multibranch/' + env.branch_name.replace("/","%2F")
   
 	properties([
 		buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),
