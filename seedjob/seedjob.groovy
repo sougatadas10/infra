@@ -1,4 +1,4 @@
-pipelineJob('DSL_Pipeline') {
+pipelineJob('example_pipeline') {
 
   def repo = 'https://github.com/sougatadas10/infra.git'
 /** Scheduling job
@@ -13,7 +13,7 @@ pipelineJob('DSL_Pipeline') {
         git {
           remote { url(repo) }
           //branches('master', '**/feature*') Can be used if we have pipelines in different branch
-          
+          branches('main')
           scriptPath('pipelines/connectDatabase.groovy')
           extensions { }  // required as otherwise it may try to tag the repo, which you may not want
         }
