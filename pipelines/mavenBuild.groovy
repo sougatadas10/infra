@@ -1,6 +1,13 @@
 @Library('sharedLibrary')_
 
-
-mavenBuild(repo: "https://github.com/devopshint/jenkins-pipeline-example.git",file: "./my-app/pom.xml",args: "-B -DskipTests clean package",body)
-      
-
+properties([
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '2',daysToKeepStr: '',numToKeepStr: '2')),  
+    parameters([
+        string(name: 'branch', defaultValue: ' ', description: 'commit id'),
+        string(name: 'repo', defaultValue: ' ', description: 'github repo'),
+        string(name: 'file', defaultValue: ' ', description: 'POM file name'),
+        string(name: 'options', defaultValue: '-B -DskipTests clean package', description: 'options'),
+        
+    ])
+])
+mavenBuild(params,this)
