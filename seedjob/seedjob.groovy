@@ -6,7 +6,7 @@ pipelineJob('connectDatabase') {
   triggers {
     scm('H/5 * * * *')
   } **/
-  description("Pipeline for connectDatabase")
+//  description("Pipeline for connectDatabase")
 
   definition {
     cpsScm {
@@ -29,7 +29,7 @@ pipelineJob('connectDatabase') {
 }    
 
 pipelineJob('mavenBuild') {
-  description("Pipeline for mavenBuild")
+//  description("Pipeline for mavenBuild")
   defination {
     cpsScm {
       scm {
@@ -46,7 +46,7 @@ pipelineJob('mavenBuild') {
 }    
 
 pipelineJob('multibranch-readYAML') {
-  description("Pipeline for multibranch-readYAML")
+//  description("Pipeline for multibranch-readYAML")
   defination {  
     cpsScm {
       scm {
@@ -63,7 +63,7 @@ pipelineJob('multibranch-readYAML') {
 }  
 
 pipelineJob('readYAMLfile') {
-  description("Pipeline for readYAMLfile")
+//  description("Pipeline for readYAMLfile")
   defination {  
     cpsScm {
       scm {
@@ -80,7 +80,7 @@ pipelineJob('readYAMLfile') {
 }  
 
 pipelineJob('runAnsible') {
-  description("Pipeline for runAnsible")
+//  description("Pipeline for runAnsible")
   defination {  
     cpsScm {
       scm {
