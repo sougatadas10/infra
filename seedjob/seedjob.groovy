@@ -29,7 +29,8 @@ pipelineJob('connectDatabase') {
 }    
 
 pipelineJob('mavenBuild') {
-  description("Pipeline for mavenBuild") {
+  description("Pipeline for mavenBuild")
+  defination {
     cpsScm {
       scm {
         git {
@@ -45,7 +46,8 @@ pipelineJob('mavenBuild') {
 }    
 
 pipelineJob('multibranch-readYAML') {
-  description("Pipeline for multibranch-readYAML") {
+  description("Pipeline for multibranch-readYAML")
+  defination {  
     cpsScm {
       scm {
         git {
@@ -61,7 +63,8 @@ pipelineJob('multibranch-readYAML') {
 }  
 
 pipelineJob('readYAMLfile') {
-  description("Pipeline for readYAMLfile") {
+  description("Pipeline for readYAMLfile")
+  defination {  
     cpsScm {
       scm {
         git {
@@ -77,7 +80,8 @@ pipelineJob('readYAMLfile') {
 }  
 
 pipelineJob('runAnsible') {
-  description("Pipeline for runAnsible") {
+  description("Pipeline for runAnsible")
+  defination {  
     cpsScm {
       scm {
         git {
@@ -87,7 +91,6 @@ pipelineJob('runAnsible') {
           scriptPath('pipelines/runAnsible.groovy')
           extensions { }  // required as otherwise it may try to tag the repo, which you may not want
         }
-
       }
     }
   }
