@@ -1,11 +1,12 @@
-pipelineJob('example_pipeline') {
+def repo = 'https://github.com/sougatadas10/infra.git'
 
-  def repo = 'https://github.com/sougatadas10/infra.git'
+pipelineJob('connectDatabase') {
+  
 /** Scheduling job
   triggers {
     scm('H/5 * * * *')
   } **/
-  description("Pipeline for $repo")
+  description("Pipeline for connectDatabase")
 
   definition {
     cpsScm {
@@ -24,7 +25,11 @@ pipelineJob('example_pipeline') {
         // git(repo, 'master', { node -> node / 'extensions' << '' } )
       }
     }
-    
+  }
+}    
+
+pipelineJob('mavenBuild') {
+  description("Pipeline for mavenBuild") {
     cpsScm {
       scm {
         git {
@@ -34,10 +39,13 @@ pipelineJob('example_pipeline') {
           scriptPath('pipelines/mavenBuild.groovy')
           extensions { }  // required as otherwise it may try to tag the repo, which you may not want
         }
-
       }
     }
+  }
+}    
 
+pipelineJob('multibranch-readYAML') {
+  description("Pipeline for multibranch-readYAML") {
     cpsScm {
       scm {
         git {
@@ -49,7 +57,11 @@ pipelineJob('example_pipeline') {
         }
       }
     }
+  }
+}  
 
+pipelineJob('readYAMLfile') {
+  description("Pipeline for readYAMLfile") {
     cpsScm {
       scm {
         git {
@@ -59,10 +71,13 @@ pipelineJob('example_pipeline') {
           scriptPath('pipelines/readYAMLfile.groovy')
           extensions { }  // required as otherwise it may try to tag the repo, which you may not want
         }
-
       }
     }
+  }
+}  
 
+pipelineJob('runAnsible') {
+  description("Pipeline for runAnsible") {
     cpsScm {
       scm {
         git {
@@ -75,8 +90,5 @@ pipelineJob('example_pipeline') {
 
       }
     }
-
-
-
   }
 }
