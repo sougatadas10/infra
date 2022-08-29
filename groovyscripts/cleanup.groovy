@@ -1,7 +1,8 @@
 import hudson.model.*
   
 def deleted = []
-def oneDayAgo = new Date() - 1
+//def oneDayAgo = new Date() - 1
+def oneDayAgo = new Date()
 jenkins.model.Jenkins.instance.nodes.each { hudson.model.Node node ->
   node.workspaceRoot.listDirectories().each { hudson.FilePath path ->
     def pathName = path.getRemote()
