@@ -10,7 +10,7 @@ jenkins.model.Jenkins.instance.nodes.each { hudson.model.Node node ->
       println "Skipping internal dir $node.displayName:$pathName"
     } else {
         def lastModified = new Date(path.lastModified())
-      if (lastModified < oneDayAgo) {
+      if (lastModified <= oneDayAgo) {
         println "Deleting workspace at $node.displayName:$pathName (last modified $lastModified)"
         path.deleteRecursive()
         deleted << "$node.displayName:$pathName"
